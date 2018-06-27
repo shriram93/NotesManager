@@ -1,0 +1,91 @@
+<!-- Main title bar -->
+<mat-toolbar class="main-toolbar" *ngIf="selectedNotes.length == 0 && selectedGroup.groupId == '' && searchEnable === false"
+  color="primary">
+  <span class="app-name">
+    <img class="brand-icon" src='../../assets/notes_icon.png'> Notes</span>
+  <!-- Search note placeholder container -->
+  <div *ngIf="user.name != ''" (click)="enableSearchNote()" class="search-note">
+    <i class="fas fa-search"></i>
+    <input class="search-box" placeholder="Search title" type="text">
+  </div>
+  <!-- Logged in user options -->
+  <div *ngIf="user.name != ''" class="right-align">
+    <!-- Login user context menu -->
+    <button class="user-name" mat-button [matMenuTriggerFor]="menu">
+      <div class="same-line">
+        <div>
+          <i [matMenuTriggerFor]="menu" class="user-icons fas fa-user"></i>
+        </div>
+        <div>{{getUserName()}}</div>
+      </div>
+    </button>
+    <!-- Context menu for logout -->
+    <mat-menu #menu="matMenu">
+      <button (click)="logout()" mat-menu-item>
+        <div class="same-line">
+          <div>
+            <i class="user-icons fas fa-sign-out-alt"></i>
+          </div>
+          <div>Logout</div>
+        </div>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<!-- Search notes by title -->
+<mat-toolbar (mouseover)="setFocusOnInput()" *ngIf="selectedGroup.groupId == '' && selectedNotes.length == 0 && searchEnable === true"
+  color="primary">
+  <i (click)="disableSearchNote()" matTooltip="Clear selection" class="back-button fas fa-chevron-left"></i>
+  <!-- Search note container -->
+  <div class="search-enable search-note">
+    <!-- Input to enter and search for note title -->
+    <i class="fas fa-search"></i>
+    <input [formControl]="myControl" #myInput class="search-box" placeholder="Search title" type="text">
+    <i (click)="disableSearchNote()" matTooltip="Clear selection" class="disable-search fas fa-times"></i>
+  </div>
+  <!-- Logged in user options -->
+  <div *ngIf="user.name != ''" class="right-align">
+    <!-- Login user context menu -->
+    <button class="user-name" mat-button [matMenuTriggerFor]="menu">
+      <div class="same-line">
+        <div>
+          <i [matMenuTriggerFor]="menu" class="user-icons fas fa-user"></i>
+        </div>
+        <div>{{getUserName()}}</div>
+      </div>
+    </button>
+    <!-- Context menu for logout -->
+    <mat-menu #menu="matMenu">
+      <button (click)="logout()" mat-menu-item>
+        <div class="same-line">
+          <div>
+            <i class="user-icons fas fa-sign-out-alt"></i>
+          </div>
+          <div>Logout</div>
+        </div>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<!-- Select multiple notes and do operations -->
+<mat-toolbar class="animated slideInDown" *ngIf="selectedNotes.length > 0" color="primary">
+  <i (click)="clearSelectedNotes()" matTooltip="Clear selection" class="back-button fas fa-chevron-left"></i>
+  {{selectedNotes.length}} selected
+  <!-- Multiple operations that can be done on selected notes -->
+  <div class="right-align">
+    <div class="same-line">
+      <i matTooltip="Add to favorites" (click)="addToFavorite()" class="icons select-fav fas fa-heart"></i>
+      <i matTooltip="Remove from favorites" (click)="removeFromFavorite()" class="icons select-fav far fa-heart"></i>
+      <i matTooltip="Delete notes" (click)="deleteNotes()" class="icons far fa-trash-alt"></i>
+      <i matTooltip="Add notes to group" (click)="addNotesToGroup()" class="icons fas fa-tags"></i>
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- Displaying only notes of a particular group -->
+<mat-toolbar class="animated slideInDown" *ngIf="selectedGroup.groupId != '' && selectedNotes.length == 0" color="primary">
+  <i (click)="clearSelectedGroup()" matTooltip="Clear selection" class="back-button fas fa-chevron-left"></i>
+  {{selectedGroup.title}}
+</mat-toolbar>

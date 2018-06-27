@@ -1,0 +1,22 @@
+<h2 mat-dialog-title class="title">Create new group</h2>
+<mat-dialog-content>
+  <div class="group-container">
+    <mat-form-field>
+      <!-- Input box to enter new group name -->
+      <input matInput (focus)="errorMessage = 'empty'" [(ngModel)]="group.title" name="title" placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <!-- Input box to enter new group description -->
+      <input matInput (focus)="errorMessage = 'empty'" [(ngModel)]="group.description" name="description" placeholder="Description">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<!-- Container to display error message -->
+<div class="error-message" [ngClass]="{'invisible': errorMessage == 'empty' }">{{errorMessage}}</div>
+<!-- Container for Create and Cancel buttons -->
+<mat-dialog-actions class="button-container">
+  <div class="button-group">
+    <button mat-raised-button (click)="closeDialog('Create')">Create</button>
+    <button mat-raised-button (click)="closeDialog('Cancel')">Cancel</button>
+  </div>
+</mat-dialog-actions>

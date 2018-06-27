@@ -1,0 +1,29 @@
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.select-time {
+  display: grid;
+  grid-gap: 3%;
+  grid-template-columns: 20% 20% 15%;
+}
+
+.dismiss-rem{
+  background:black;
+}

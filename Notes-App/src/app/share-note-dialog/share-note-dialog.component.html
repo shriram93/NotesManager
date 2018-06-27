@@ -1,0 +1,50 @@
+<h2 mat-dialog-title class="title">Share note with</h2>
+<mat-dialog-content>
+  <!-- Display current shared users -->
+  <div class="share-user" *ngFor="let user of sharedUsers">
+    <div>
+      <!-- Share user name and email address -->
+      <div class="share-user-name">
+        <strong>{{user.name}}</strong>
+      </div>
+      <div class="share-user-email">{{user.email}}</div>
+    </div>
+    <!-- Unshare the note with the user -->
+    <div class="delete-share-user">
+      <i (click)="unshareNote(user.userId)" class="delete-icon fas fa-times"></i>
+    </div>
+  </div>
+
+  <!-- Search other users using their email address -->
+  <form class="form">
+    <mat-form-field class="full-width">
+      <input type="text" (focus)="errorMessage = 'empty' && updateUserList()" placeholder="Person email to share with" aria-label="Number"
+        matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let user of filteredItems | async" [value]="user.email" (click)="shareNoteWith(user.userId)">
+          {{ user.email }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <!-- Form to choose shared note access to other user -->
+  <mat-form-field class="full-width">
+    <mat-select (focus)="errorMessage = 'empty'" [(value)]="selectedPermission" placeholder="Permission">
+      <mat-option value="Read">Read</mat-option>
+      <mat-option value="Read/Edit">Read/Edit</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<!-- Container to display error message -->
+<div class="error-message" [ngClass]="{'invisible': errorMessage == 'empty' }">{{errorMessage}}</div>
+
+<!-- Container for Save and Close buttons -->
+<mat-dialog-actions class="button-container">
+  <div class="button-group">
+    <button mat-raised-button (click)="closeDialog('Save')">Save</button>
+    <button mat-raised-button (click)="closeDialog('Cancel')">Close</button>
+  </div>
+</mat-dialog-actions>

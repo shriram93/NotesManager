@@ -1,0 +1,77 @@
+<mat-card class="note" [ngClass]="{'note-selected': noteSelected === true}">
+  
+  <!-- select/deselect note hover button -->
+  <div [ngClass]="{ 'select-note-circle-selected': noteSelected === true,  'fadeIn' : noteSelected === true}" (click)="selectNote()"
+    class="animated select-note-circle">
+    <i matTooltip="Select note" [matTooltipShowDelay]="500" *ngIf="noteSelected === false" class="fas fa-check"></i>
+    <i matTooltip="Deselect note" [matTooltipShowDelay]="500" *ngIf="noteSelected === true" class="fas fa-check"></i>
+  </div>
+
+  <!-- Favorite/Unfavorite note hover button -->
+  <div (click)="toggleFav()" class="fav-note-box" [ngClass]="{
+    'fav-note-box-selected': noteSelected === true ||  selectedNotes.length > 0
+  }">
+    <i matTooltip="Add to favorite" [matTooltipShowDelay]="500" *ngIf="note.favorite === false && noteSelected === false &&  selectedNotes.length == 0"
+      class="far fa-heart"></i>
+    <i matTooltip="Remove from favorite" [matTooltipShowDelay]="500" *ngIf="note.favorite === true" class="fav-selected fas fa-heart"></i>
+  </div>
+
+  <!-- Actual note container showing title and description -->
+  <div class="note-title">
+    {{note.title}}
+  </div>
+  <div class="note-desc">
+    {{note.content}}
+  </div>
+
+  <!-- Showing tags if a remainder is added to the note/added to a group -->
+  <div class="tags-container">
+
+    <!-- Remainer tag -->
+    <div class="tag" (mouseenter)="lockDeleteRemainder == false && mouseEnter($event)" (mouseleave)="lockDeleteRemainder == false && mouseLeave($event)"
+      *ngIf="note.remainderId">
+      <div class="tag-name" [ngClass]="{
+        'strike-word': isRemainderDismissed
+      }">
+        {{remainderTime}}
+      </div>
+      <div *ngIf="lockDeleteRemainder == false" (click)="removeRemainder()" class="remove-btn">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <!-- Group tag -->
+    <div class="tag" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)" [ngClass]="{
+      'hide-tag' : !(note.groupId && getGroupName(note.groupId)) || selectedGroup.groupId != ''
+    }">
+      <div class="tag-name">
+        {{(note.groupId && getGroupName(note.groupId))|| "empty"}}
+      </div>
+      <div *ngIf="note.groupId" (click)="removeNoteFromGroup(note.groupId,note.noteId)" class="remove-btn">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom hover options -->
+  <div class="bottom-options">
+    <div [ngClass]="{'hide-icon': noteSelected === true || selectedNotes.length > 0 }">
+      <i matTooltip="Delete note" [matTooltipShowDelay]="500" (click)="deleteNote()" class="far fa-trash-alt"></i>
+      <i *ngIf="note.permission =='author' || note.permission == 'Read/Edit'" matTooltip="Edit note" [matTooltipShowDelay]="500"
+        (click)="editNote()" class="fas fa-edit"></i>
+      <i matTooltip="Add note to group" [matTooltipShowDelay]="500" *ngIf="note.groupId == ''" (click)="addNoteToGroup()" class="fas fa-tags"></i>
+      <i matTooltip="Share note" *ngIf="note.parentNoteId == '' " [matTooltipShowDelay]="500" (click)="shareNote()" class="fas fa-share-alt"></i>
+      <i matTooltip="Add remainder" *ngIf="note.remainderId == '' " [matTooltipShowDelay]="500" (click)="addRemainder()" class="far fa-bell"></i>
+    </div>
+  </div>
+
+  <!-- If note is shared from another user, show the parent user info -->
+  <div *ngIf="note.parentNoteId != ''" class="shared-note">
+    <div>
+      <span></span>
+      <span matTooltip="{{getParentUserNameToolTip()}}" [matTooltipShowDelay]="500" class="parent-user">{{getParentUserName()}}</span>
+    </div>
+  </div>
+
+</mat-card>

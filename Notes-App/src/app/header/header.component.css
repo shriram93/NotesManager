@@ -1,0 +1,99 @@
+.animated {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+}
+
+mat-toolbar {
+  position: relative;
+}
+
+.app-name {
+  font-size: 1.1em;
+}
+
+.back-button {
+  cursor: pointer;
+  margin-right: 32px;
+}
+
+.right-align {
+  position: absolute;
+  right: 0;
+  margin-right: 32px;
+}
+
+.same-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+}
+
+.same-line div {
+  display: flex;
+  justify-content: center;
+}
+
+.user-name {
+  font-size: 1em;
+}
+
+.icons {
+  margin: auto 20px;
+  cursor: pointer;
+}
+
+.user-icons {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.select-fav {
+  color: #CB3D3D;
+}
+
+.search-note {
+  position: absolute;
+  left: 15%;
+  width: 40%;
+  height: 80%;
+  background: rgba(255, 255, 255, .05);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 15% auto 15%;
+}
+
+.search-note input,
+i {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.search-note i:nth-of-type(2) {
+  cursor: pointer;
+}
+
+.search-note input {
+  text-align: left;
+}
+
+.search-enable {
+  background: #fff;
+  color: #727272;
+}
+
+.search-box {
+  background: transparent;
+  border: none;
+}
+
+.search-box:focus {
+  outline: none;
+}

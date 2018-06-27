@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Add remainder</h2>
+<mat-dialog-content>
+  <!-- Input to choose date for remiander -->
+  <div class="date-label">
+    Choose a date
+  </div>
+  <mat-form-field>
+    <input matInput [matDatepickerFilter]="myFilter" readonly="readonly" [matDatepicker]="picker" placeholder="Date" [(ngModel)]="selectedDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <!-- Input to choose time for remiander -->
+  <div class="time-label">
+    Choose a time
+  </div>
+  <div class="select-time">
+    <mat-form-field>
+      <!-- Input time - hour -->
+      <mat-select placeholder="Hour" [(ngModel)]="selectedHour">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Input time - minutes -->
+    <mat-form-field>
+      <mat-select placeholder="Minute" [(ngModel)]="selectedMinutes">
+        <mat-option *ngFor="let minute of minutes" [value]="minute">
+          {{ formatTime(minute)}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="select-time-am-pm">
+      <!-- Input time - AM/PM -->
+      <mat-select placeholder="AM/PM" [(ngModel)]="selectedAmPm">
+        <mat-option value="AM">
+          AM
+        </mat-option>
+        <mat-option value="PM">
+          PM
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<!-- Container to display error message -->
+<div class="error-message" [ngClass]="{'invisible': errorMessage == 'empty' }">{{errorMessage}}</div>
+<!-- Container for Add and cancel buttons -->
+<mat-dialog-actions class="button-container">
+  <div class="button-group">
+    <button mat-raised-button (click)="closeDialog('Add')">Add</button>
+    <button mat-raised-button (click)="closeDialog('Cancel')">Cancel</button>
+  </div>
+</mat-dialog-actions>

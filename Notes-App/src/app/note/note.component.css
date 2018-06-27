@@ -1,0 +1,177 @@
+.note {
+  display: inline-block;
+  min-width: 225px;
+  padding: 40px 24px 30px 24px;
+  box-sizing: border-box;
+  border: 5px solid transparent;
+}
+
+.note-selected {
+  border-color: #727272;
+}
+
+.note:hover .bottom-options div {
+  visibility: visible;
+}
+
+.note:hover .select-note-circle {
+  visibility: visible;
+}
+
+.note:hover .fav-note-box {
+  visibility: visible;
+}
+
+.note-title {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.select-note-circle {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background: #fff;
+  border-radius: 50%;
+  visibility: hidden;
+  color: #727272;
+}
+
+.select-note-circle:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.select-note-circle-selected {
+  visibility: visible;
+  background: #727272;
+  color: #fff;
+}
+
+.select-note-circle-selected:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.fav-note-box {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  visibility: hidden;
+  color: #727272;
+}
+
+.fav-selected {
+  color: #CB3D3D;
+  visibility: visible;
+}
+
+.fav-note-box i:hover {
+  color: #CB3D3D;
+  cursor: pointer;
+}
+
+.fav-note-box-selected i:hover {
+  cursor: default;
+}
+
+.bottom-options {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.shared-note {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+}
+
+.shared-note div {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  text-align: center;
+  color: #fff;
+
+}
+.parent-user{
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4153AF;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  }
+
+.bottom-options div {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  visibility: hidden;
+  text-align: center;
+  color: #727272;
+}
+
+.bottom-options div i:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.note .hide-tag {
+  visibility: hidden;
+}
+
+.note:hover .hide-tag {
+  visibility: hidden;
+}
+
+.tag {
+  margin: 16px 0;
+  background: #727272;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: .8em;
+  display: inline-grid;
+  grid-template-columns: auto 12px;
+  justify-content: space-evenly;
+}
+
+.tag:nth-child(even){
+  margin-left:10px; 
+}
+
+.remove-btn {
+  margin-left: 5px;
+  visibility: hidden;
+}
+
+.show-icon {
+    visibility: visible;
+    cursor: pointer;
+}
+
+.hide-icon {
+    visibility: hidden !important;
+}
+
+.animated {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;   
+}
+
+.tag-name {
+  white-space: nowrap;
+}
+
+
+.strike-word{
+  text-decoration: line-through;
+}

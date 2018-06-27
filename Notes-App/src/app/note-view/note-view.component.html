@@ -1,0 +1,10 @@
+<div class="Container" >
+  <!-- Toast notification for note shared and remainders -->
+  <app-toast-notification (goToastClose)="onToastClose($event)"></app-toast-notification>
+
+  <!-- Note component -->
+  <app-note class="Container-item" *ngFor="let note of notes" [note]="note" 
+  (goToggleFav)="onToggleFav($event)" 
+  (goSelectNote)="onSelectNote($event)"
+  ></app-note>
+</div>

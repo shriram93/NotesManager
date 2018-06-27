@@ -1,0 +1,2043 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "url" : "http://localhost:3000/api/v1"
+  } ],
+  "info" : {
+    "description" : "Add, edit, manager and share notes between users",
+    "version" : "0.1-oas3",
+    "title" : "Notes"
+  },
+  "tags" : [ {
+    "name" : "users",
+    "description" : "Operations about user"
+  }, {
+    "name" : "notes",
+    "description" : "Operations about notes"
+  }, {
+    "name" : "groups",
+    "description" : "Operations about groups"
+  }, {
+    "name" : "remainders",
+    "description" : "Operations about remainders"
+  } ],
+  "paths" : {
+    "/api/v1/users/register" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Register a new user",
+        "responses" : {
+          "200" : {
+            "description" : "New user successfully registered",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/users/login" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Login with user credentials",
+        "responses" : {
+          "200" : {
+            "description" : "Successful login",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "token" : {
+                      "type" : "string"
+                    },
+                    "userId" : {
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "User not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Wrong password",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/users/detail" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Get a particular user details",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/users/otherusers" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Get other user details",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Other user details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find user/No other users found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/create" : {
+      "post" : {
+        "tags" : [ "notes" ],
+        "summary" : "Create a new note",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "title" : {
+                    "type" : "string"
+                  },
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/delete" : {
+      "post" : {
+        "tags" : [ "notes" ],
+        "summary" : "Delete a note",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/update" : {
+      "put" : {
+        "tags" : [ "notes" ],
+        "summary" : "Update a note",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  },
+                  "title" : {
+                    "type" : "string"
+                  },
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/fav" : {
+      "put" : {
+        "tags" : [ "notes" ],
+        "summary" : "Toggle favorite status of note",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/share" : {
+      "post" : {
+        "tags" : [ "notes" ],
+        "summary" : "Share a note with other user",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note/Cannot find share user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  },
+                  "shareuserid" : {
+                    "type" : "string"
+                  },
+                  "sharepermission" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/unshare" : {
+      "post" : {
+        "tags" : [ "notes" ],
+        "summary" : "Unshare a note which is already shared",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note/Cannot find share user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  },
+                  "shareuserid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/" : {
+      "post" : {
+        "tags" : [ "notes" ],
+        "summary" : "Get all notes created by a user",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Note"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No notes found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/notes/note" : {
+      "post" : {
+        "tags" : [ "notes" ],
+        "summary" : "Get details of a particular note",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No notes found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "noteid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/groups/create" : {
+      "post" : {
+        "tags" : [ "groups" ],
+        "summary" : "Create a new group",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "title" : {
+                    "type" : "string"
+                  },
+                  "description" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/groups/delete" : {
+      "post" : {
+        "tags" : [ "groups" ],
+        "summary" : "Delete a group",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find group",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "groupid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/groups/addnote" : {
+      "post" : {
+        "tags" : [ "groups" ],
+        "summary" : "Add a note to a group",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note/Cannot find group",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "groupid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/groups/removenote" : {
+      "post" : {
+        "tags" : [ "groups" ],
+        "summary" : "Remove a note from a group",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find note/Cannot find group",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "groupid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/groups/" : {
+      "post" : {
+        "tags" : [ "groups" ],
+        "summary" : "Get all groups created by a user",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Group"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No groups found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/groups/group" : {
+      "post" : {
+        "tags" : [ "groups" ],
+        "summary" : "Get details of a particular group",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No group found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "groupid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/remainders/create" : {
+      "post" : {
+        "tags" : [ "remainders" ],
+        "summary" : "Create a new remainder",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Remainder"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  },
+                  "remaindertime" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/remainders/delete" : {
+      "post" : {
+        "tags" : [ "remainders" ],
+        "summary" : "Delete a remainder",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find remainder/Cannot find note",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "noteid" : {
+                    "type" : "string"
+                  },
+                  "remainderid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/remainders/dismiss" : {
+      "post" : {
+        "tags" : [ "remainders" ],
+        "summary" : "Dismiss a remainder",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find remainder",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "remainderid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/remainders/snooze" : {
+      "post" : {
+        "tags" : [ "remainders" ],
+        "summary" : "Snooze a remainder for a given time",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find remainder",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "remainderid" : {
+                    "type" : "string"
+                  },
+                  "snoozetime" : {
+                    "type" : "number"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/remainders/" : {
+      "post" : {
+        "tags" : [ "remainders" ],
+        "summary" : "Get all remainders created by a user",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Remainder"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No remainders found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/api/v1/remainders/detail" : {
+      "post" : {
+        "tags" : [ "remainders" ],
+        "summary" : "Get details of a particular remainder",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Remainder"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Not authenticated",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cannot find remainder",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "userid" : {
+                    "type" : "string"
+                  },
+                  "remainderid" : {
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Response" : {
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "User" : {
+        "properties" : {
+          "userId" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Note" : {
+        "properties" : {
+          "noteId" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "permission" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string"
+          },
+          "sharedNotes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "noteId" : {
+                  "type" : "string"
+                },
+                "userId" : {
+                  "type" : "string"
+                },
+                "permission" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "parentNoteId" : {
+            "type" : "string"
+          },
+          "groupId" : {
+            "type" : "string"
+          },
+          "remainderId" : {
+            "type" : "string"
+          },
+          "favorite" : {
+            "type" : "boolean"
+          },
+          "createdOn" : {
+            "type" : "string"
+          },
+          "modifiedOn" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Group" : {
+        "properties" : {
+          "groupId" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "notes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Note"
+            }
+          },
+          "createdOn" : {
+            "type" : "string"
+          },
+          "modifiedOn" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Remainder" : {
+        "properties" : {
+          "remainderId" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "noteId" : {
+            "type" : "string"
+          },
+          "remainderTime" : {
+            "type" : "string"
+          },
+          "isDismissed" : {
+            "type" : "boolean"
+          },
+          "createdOn" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}

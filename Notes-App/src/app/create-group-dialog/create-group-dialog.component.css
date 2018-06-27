@@ -1,0 +1,31 @@
+.title {
+  margin-bottom: 32px;
+}
+
+.group-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-container input {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.error-message {
+  color: red;
+}

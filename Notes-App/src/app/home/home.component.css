@@ -1,0 +1,10 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 20vw 80vw;
+  justify-content: space-evenly;
+}
+
+.note-view {
+  margin-top: 16px;
+  padding: 16px;
+}

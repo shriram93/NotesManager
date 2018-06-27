@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Confirm</h2>
+<mat-dialog-content>
+  Are you sure you want to delete this group?
+</mat-dialog-content>
+<!-- Container for Yes and No buttons -->
+<mat-dialog-actions class="button-container">
+  <div class="button-group">
+    <button mat-raised-button (click)="closeDialog('Yes')">Yes</button>
+    <button mat-raised-button (click)="closeDialog('No')">No</button>
+  </div>
+</mat-dialog-actions>

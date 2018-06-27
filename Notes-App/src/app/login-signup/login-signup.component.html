@@ -1,0 +1,46 @@
+<div class="vertical-center">
+  <mat-card class="login-signup">
+    <h4 class="welcome-msg">Welcome to Notes</h4>
+    <mat-tab-group mat-stretch-tabs>
+      <!-- Login form tab -->
+      <mat-tab label="Log in">
+        <ng-template matTabContent>
+          <form #loginForm="ngForm" class="animated fadeIn login-form">
+            <mat-form-field>
+              <input matInput [ngModel]="email" (focus)="submitMessage = 'empty'" name="email" placeholder="Email">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="password" [ngModel]="password" (focus)="submitMessage = 'empty'" name="password" placeholder="Password">
+            </mat-form-field>
+            <button mat-raised-button (click)="signIn(loginForm)" color="primary">Continue</button>
+          </form>
+        </ng-template>
+      </mat-tab>
+      <!-- Signup form tab -->
+      <mat-tab label="Sign up">
+        <ng-template matTabContent>
+          <form #registerForm="ngForm" class="animated fadeIn login-form">
+            <div class="lead-msg">Let's Setup your Account!</div>
+            <mat-form-field>
+              <input matInput [ngModel]="name" (focus)="submitMessage = 'empty'" name="name" placeholder="Name">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [ngModel]="email" (focus)="submitMessage = 'empty'" name="email" placeholder="Email">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="password" [ngModel]="password" (focus)="submitMessage = 'empty'" name="password" placeholder="Password">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="password" [ngModel]="confirmPassword" (focus)="submitMessage = 'empty'" name="confirmPassword" placeholder="Confirm password">
+            </mat-form-field>
+            <button mat-raised-button (click)="registerUser(registerForm)" color="primary">Create account</button>
+          </form>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+    <!-- Container to display error message -->
+    <div [ngClass]="{'invisible': submitMessage == 'empty'}" class="login-errors">
+      <p class="validation-error" [ngClass]="{'account-created':submitMessage == 'Account created. Login to continue'}">{{submitMessage}}</p>
+    </div>
+  </mat-card>
+</div>

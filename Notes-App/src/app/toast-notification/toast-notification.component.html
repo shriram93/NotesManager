@@ -1,0 +1,19 @@
+<div id="toast">
+  <!-- Show share/remainder icon based on toast type -->
+  <div id="img">
+    <i *ngIf="toastType == 'remainder' || toastType == 'preRemainder'" class="far fa-bell"></i>
+    <i *ngIf="toastType == 'share'" class="fas fa-share-alt"></i>
+  </div>
+  <!-- toast container -->
+  <div id="desc">
+    <div>
+      {{toastMessage}}
+    </div>
+    <!-- Container for toast actions -->
+    <div class="button-group">
+      <button color="warn" mat-button (click)="onCloseToast('Dismiss')">Dismiss</button>
+      <button *ngIf="toastType == 'remainder'" color="primary" mat-button (click)="onCloseToast('Snooze')">Snooze</button>
+      <button *ngIf="toastType == 'preRemainder'" color="primary" mat-button (click)="onCloseToast('Close')">Close</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.Container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Container-item {
+  margin: 16px;
+}

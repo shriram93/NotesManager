@@ -1,0 +1,12 @@
+const restServer = require('../../index');
+const wsServer = require('../socketIo');
+
+// the port has to come from config file (or) as a env variable
+const port = (process.env.PORT || 3000);
+restServer.listen(port, () => {
+  console.log(`REST server is listening on ${port} `);
+})
+
+wsServer.listen(5000, () => {
+  console.log('WS server is listening on 5000');
+});

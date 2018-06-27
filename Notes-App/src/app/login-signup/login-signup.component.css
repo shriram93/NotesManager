@@ -1,0 +1,46 @@
+.vertical-center {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.login-signup {
+  width: 30vw;
+}
+
+.login-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-msg {
+  text-align: center;
+  color: #4153AF;
+}
+
+.lead-msg {
+  text-align: center;
+  color: #727272;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.login-errors {
+  margin-top: 8px;
+}
+
+.validation-error {
+  text-align: center;
+  margin: 0;
+  color: red;
+}
+
+.account-created {
+  color: green;
+}

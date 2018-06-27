@@ -1,0 +1,64 @@
+.label {
+  margin: 20px;
+}
+
+.icons {
+  margin-right: 10px;
+  display: inline;
+}
+
+.list-item {
+  margin: 20px 0;
+  /* padding: 10px 20px; */
+  height: 100%;
+  width: 100%;
+}
+
+.create-group {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+}
+
+.group-detail {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  justify-content: space-evenly;
+}
+
+.select-group {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+}
+
+.list-item div {
+  text-align: center;
+}
+
+.list-item .title-name {
+  text-align: left;
+}
+
+.mouse-click-cursor {
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background: #B8B8B8;
+}
+
+.delete-icon {
+  display: none;
+  cursor: pointer;
+}
+
+.show-icon {
+  display: inline;
+}
+
+.delete-group {
+  padding: 10px 20px;
+}

@@ -1,0 +1,30 @@
+<div class="note-group">
+  <div class="label">
+    Groups
+  </div>
+  <!-- Create new group button -->
+  <div (click)="createGroup()" class="mouse-click-cursor list-item create-group">
+    <div>
+      <i class="icons fas fa-plus"></i>
+    </div>
+    <div class="title-name">
+      Create new group
+    </div>
+  </div>
+  <!-- Show the list of all groups -->
+  <div *ngFor="let group of groups">
+    <div class="list-item group-detail" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)">
+      <div (click)="selectGroup(group)" class="select-group mouse-click-cursor">
+        <div>
+          <i class="tag-icon icons fas fa-tags"></i>
+        </div>
+        <div (click)="selectGroup(group)" class="title-name mouse-click-cursor">
+          {{group.title}}
+        </div>
+      </div>
+      <div class="delete-group">
+        <i (click)="deleteGroup(group.groupId)" class="delete-icon icons fas fa-trash"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.full-width {
+  width: 100%;
+  padding-top: 16px;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.error-message {
+  color: red;
+}
+
+.share-user {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+}
+
+.share-user:hover {
+  background: #B8B8B8;
+}
+
+.share-user:hover .delete-icon {
+  visibility: visible;
+}
+
+.delete-share-user {
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-icon {
+  cursor: pointer;
+  visibility: hidden;
+}

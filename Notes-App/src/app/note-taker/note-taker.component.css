@@ -1,0 +1,23 @@
+.note-taker {
+  width: 50vw;
+  margin: 20px auto;
+}
+
+.note-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-note-btn {
+  width: 10%;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.error-message {
+  color: red;
+  margin-top: 8px;
+  margin-bottom: 0;
+}

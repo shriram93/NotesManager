@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Add to group</h2>
+<mat-dialog-content>
+  <!-- Auto complete box for group name search -->
+  <form class="form">
+    <mat-form-field class="full-width">
+      <input type="text" (focus)="errorMessage = 'empty'" placeholder="Search group" aria-label="Number" matInput [formControl]="myControl"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let group of filteredItems | async" [value]="group.title" (click)="selectGroup(group.groupId,$event)">
+          {{ group.title }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<!-- Container to display error message -->
+<div class="error-message" [ngClass]="{'invisible': errorMessage == 'empty' }">{{errorMessage}}</div>
+<!-- Container for Add and cancel buttons -->
+<mat-dialog-actions class="button-container">
+  <div class="button-group">
+    <button mat-raised-button (click)="closeDialog('Add')">Add</button>
+    <button mat-raised-button (click)="closeDialog('Cancel')">Cancel</button>
+  </div>
+</mat-dialog-actions>
